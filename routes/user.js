@@ -149,7 +149,6 @@ router.post(
 
 router.get("/me", auth, async (req, res) => {
   try {
-    // request.user is getting fetched from Middleware after token authentication
     const user = await User.findById(req.user.id);
     res.json(user);
   } catch (e) {
@@ -159,9 +158,10 @@ router.get("/me", auth, async (req, res) => {
 
 router.put("/update-profile", auth, async (req, res) => {
   try {
-    console.log("body =>",req.body.username)
-    // request.user is getting fetched from Middleware after token authentication
     const user = await User.findByIdAndUpdate(req.user.id, req.body);
+    if (user) {
+      user.username = req.body.username;
+    }
     res.json(user);
   } catch (e) {
     res.send({ message: "Error in Fetching user" });
