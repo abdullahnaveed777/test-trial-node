@@ -20,7 +20,10 @@ router.post(
   [
     check("username", "Please Enter a Valid Username").not().isEmpty(),
     check("email", "Please enter a valid email").isEmail(),
-    check("password", "Please enter a valid password").isLength({
+    check(
+      "password",
+      "Please enter a valid password of minimum of 6 characters"
+    ).isLength({
       min: 6,
     }),
   ],
